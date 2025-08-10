@@ -8,6 +8,26 @@ from dotenv import load_dotenv
 # Загружаем переменные окружения из .env файла
 load_dotenv()
 
+def get_clean_text(url: str) -> str:
+    """Получает и очищает текст с веб-страницы"""
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        response = requests.get(url, headers=headers, timeout=15)
+        response.raise_for_status()
+        
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Удаляем ненужные элементы
+        for element in soup(["script", "style", "nav", "footer", "header", "iframe"]):
+            element.decompose()
+            
+        # Получаем текст с переносами строк
+        text = soup.get_text(separator='\n', strip=True)
+        return text[:10000]  # Ограничиваем объем текста
+        
+    except Exception as e:
+        raise ValueError(f"Ошибка получения текста с сайта: {str(e)}")
+
 def get_user_url() -> str:
     """Запрашивает у пользователя URL сайта для анализа"""
     print("\n" + "="*40)

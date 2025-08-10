@@ -48,14 +48,28 @@
     </div>
     
     <script>
-        // Показываем дополнительный статус через 15 секунд
-        setTimeout(() => {
-            const waitingInfo = document.createElement('p');
-            waitingInfo.textContent = 'Идёт глубокая обработка контента...';
-            waitingInfo.style.marginTop = '20px';
-            waitingInfo.style.color = '#666';
-            document.body.appendChild(waitingInfo);
-        }, 15000);
+        document.addEventListener('DOMContentLoaded', function() {
+          setTimeout(function() {
+            const loader = document.querySelector('.loader');
+            if (loader) {  // Проверяем, что страница всё ещё в состоянии загрузки
+              const info = document.createElement('p');
+              info.textContent = 'Идёт глубокая обработка контента...';
+              info.style.cssText = `
+                margin-top: 20px;
+                color: #666;
+                text-align: center;
+                animation: fadeIn 1s;
+              `;
+              
+              // Добавляем перед loader или в другое подходящее место
+              loader.insertAdjacentElement('afterend', info);
+            }
+          }, 15000);
+        });
+      </script>
+    <script>
+        console.log("JavaScript работает!");
+        alert("Страница загружена");
     </script>
 </body>
 </html>
