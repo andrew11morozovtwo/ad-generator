@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор постов для соцсетей</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-container {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        input[type="url"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .loader {
+            display: none;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error-message {
+            color: #e74c3c;
+            margin-top: 15px;
+            padding: 10px;
+            background: #fdecea;
+            border-radius: 4px;
+            display: none;
+        }
+        .info-text {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Генератор постов для социальных сетей</h1>
+    
+    <div class="form-container">
+        <form id="analysis-form" method="POST" action="/">
+            <input type="url" name="url" placeholder="Введите URL сайта (например, https://example.com)" required>
+            <button type="submit" id="analyze-btn">Анализировать</button>
+        </form>
+        
+        <div id="loader" class="loader"></div>
+        
+        <div id="error-message" class="error-message"></div>
+        
+        <p class="info-text">
+            Вставьте URL сайта, и мы автоматически создадим пост для социальных сетей<br>
+            на основе анализа его контента
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('analysis-form').addEventListener('submit', function(e) {
+            const btn = document.getElementById('analyze-btn');
+            const loader = document.getElementById('loader');
+            const errorMsg = document.getElementById('error-message');
+            
+            // Проверка URL
+            const urlInput = document.querySelector('input[name="url"]');
+            if (!urlInput.value.startsWith('http://') && !urlInput.value.startsWith('https://')) {
+                e.preventDefault();
+                errorMsg.textContent = 'URL должен начинаться с http:// или https://';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            
+            // Показываем индикатор загрузки
+            btn.disabled = true;
+            btn.textContent = 'Обработка...';
+            loader.style.display = 'block';
+            errorMsg.style.display = 'none';
+            
+            // Через 5 секунд показываем дополнительное сообщение
+            setTimeout(() => {
+                if (loader.style.display === 'block') {
+                    const info = document.createElement('p');
+                    info.textContent = 'Процесс может занять несколько минут...';
+                    info.style.textAlign = 'center';
+                    info.style.marginTop = '20px';
+                    info.style.color = '#3498db';
+                    document.querySelector('.form-container').appendChild(info);
+                }
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

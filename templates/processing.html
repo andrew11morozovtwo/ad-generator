@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Анализ в процессе</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .status {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .url {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+    <meta http-equiv="refresh" content="2">
+</head>
+<body>
+    <h1>Идет анализ сайта...</h1>
+    <div class="loader"></div>
+    
+    <div class="status">Пожалуйста, подождите. Это может занять несколько минут.</div>
+    
+    <div class="url">
+        Анализируем: <strong>{{ url }}</strong>
+    </div>
+    
+    <script>
+        // Показываем дополнительный статус через 15 секунд
+        setTimeout(() => {
+            const waitingInfo = document.createElement('p');
+            waitingInfo.textContent = 'Идёт глубокая обработка контента...';
+            waitingInfo.style.marginTop = '20px';
+            waitingInfo.style.color = '#666';
+            document.body.appendChild(waitingInfo);
+        }, 15000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Результаты анализа</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .section { margin-bottom: 30px; }
+        .prompt, .result { 
+            margin: 15px 0; padding: 15px; 
+            border-left: 4px solid #4CAF50; 
+            background: #f9f9f9; 
+        }
+        .final-post { 
+            padding: 20px; 
+            background: #f0f8ff;
+            border-left: 4px solid #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Результаты анализа</h1>
+    <div class="url">Сайт: {{ url }}</div>
+    
+    <div class="section">
+        <h2>Шаги анализа:</h2>
+        {% for prompt in prompts %}
+        <div class="prompt">{{ prompt }}</div>
+        {% endfor %}
+    </div>
+    
+    <div class="section">
+        <h2>Результаты:</h2>
+        {% for result in results %}
+        <div class="result">{{ result }}</div>
+        {% endfor %}
+    </div>
+    
+    <div class="section">
+        <h2>Рекламный пост:</h2>
+        <div class="final-post">{{ final_post }}</div>
+    </div>
+    
+    <a href="/">Новый анализ</a>
+</body>
+</html>
